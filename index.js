@@ -48,6 +48,9 @@ app.get('/', function(request, response) {
 	//var calc = new Calculation();
 	//response.send(Calculation.evaluateExpressionData(strJSon,equation7));
 	//console.log(Calculation('',''));
+	let equation = request.query.equation;
+	console.log(equation);
+
 	var Today = new Date();
 	var startTime = Today.getTime(); 
 	var today = new Date();
@@ -55,8 +58,11 @@ app.get('/', function(request, response) {
             m = today.getMinutes(),
             s = today.getSeconds();
 	console.log(h + ":" + m + ":" + s);
-	var result= Calculation.evaluateExpressionData(strJSon,numData6);
-	response.send(result);
+	var result= Calculation.evaluateExpressionData(strJSon,equation);
+	console.log(startTime - Today.getTime());
+
+	response.status(200).send(String(result));
+	//status(200).send('some text');
 	console.log(startTime - Today.getTime());
 	
 });
