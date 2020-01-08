@@ -105,15 +105,18 @@ this.evaluateExpressionData = function (jsonString, strExpnData){
     //var minimun = this.replaceWithData(jsonString,strExpnData);
     var obj = JSON.parse(jsonString);
     var strMap = new Map();
-    for(var j=0 ;j < 1;j++){
+    for(var j=0 ;j < 2000;j++){
         for (var k of Object.keys(obj)) {
             strMap.set(k, obj[k]);
         }
     }
     console.log('===Reaplcement done');
-    for (var k of strMap.keys()){
-        strExpnData = strExpnData.split(k).join(strMap.get(k));
+    for(var l=0 ;l < 2000;l++){
+        for (var k of strMap.keys()){
+            strExpnData = strExpnData.split(k).join(strMap.get(k));
+        }
     }
+    
     var datatoGet ;
     for(var j=0 ;j < 100000;j++){
         datatoGet = nodeEval(strExpnData);
