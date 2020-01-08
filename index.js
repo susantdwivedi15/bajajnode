@@ -53,7 +53,7 @@ app.get('/', function(request, response) {
 	let loop2 = request.query.loop2;
 	let loop3 = request.query.loop3;
 	
-	console.log(equation);
+	console.log('====equation'+equation);
 
 	var Today = new Date();
 	var startTime = Today.getTime(); 

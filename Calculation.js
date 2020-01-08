@@ -113,10 +113,11 @@ this.evaluateExpressionData = function (jsonString, strExpnData,loop1,loop2,loop
     console.log('===Reaplcement done');
     for(var l=0 ;l < loop2;l++){
         for (var k of strMap.keys()){
+            console.log('=====k'+k+'========strMap.get(k)='+strMap.get(k));
             strExpnData = strExpnData.split(k).join(strMap.get(k));
         }
     }
-
+    console.log('=====strExpnData====='+strExpnData);
     var datatoGet ;
     for(var j=0 ;j < loop3;j++){
         datatoGet = nodeEval(strExpnData);
