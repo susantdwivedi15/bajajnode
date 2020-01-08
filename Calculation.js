@@ -100,25 +100,25 @@ console.log(h + ":" + m + ":" + s);
 console.log(calc.evaluateExpressionData(strJSon,equation7));
 console.log(startTime -Today.getTime()); */
 //module.exports.Calculation = Calculation;
-this.evaluateExpressionData = function (jsonString, strExpnData){
+this.evaluateExpressionData = function (jsonString, strExpnData,loop1,loop2,loop3){
     var nodeEval = require('node-eval');
     //var minimun = this.replaceWithData(jsonString,strExpnData);
     var obj = JSON.parse(jsonString);
     var strMap = new Map();
-    for(var j=0 ;j < 2000;j++){
+    for(var j=0 ;j < loop1;j++){
         for (var k of Object.keys(obj)) {
             strMap.set(k, obj[k]);
         }
     }
     console.log('===Reaplcement done');
-    for(var l=0 ;l < 2000;l++){
+    for(var l=0 ;l < loop2;l++){
         for (var k of strMap.keys()){
             strExpnData = strExpnData.split(k).join(strMap.get(k));
         }
     }
-    
+
     var datatoGet ;
-    for(var j=0 ;j < 100000;j++){
+    for(var j=0 ;j < loop3;j++){
         datatoGet = nodeEval(strExpnData);
     }
     return datatoGet;
