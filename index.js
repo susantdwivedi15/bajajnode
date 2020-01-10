@@ -38,13 +38,21 @@ client.connect();
 
 app.get('/', function(request, response) {
 	
-	var numData2 = '(Operand1*Operand2)+Operand3+(Operand4*Operand5)'; 
-	var numData3 = '(Operand1*Operand2)+Operand3+(Operand4*Operand5)*Operand3*Operand2*Operand1';
-	var numData4 = 'Min((((Operand1*Operand2)+Operand3+(Operand4*Operand5))*Operand3*Operand2*Operand1),(Operand1*Operand2)+Operand3+(Operand4*Operand5))';
-	var numData5 = 'Max((((Operand1*Operand2)+Operand3+(Operand4*Operand5))*Operand3*Operand2*Operand1),(Operand1*Operand2)+Operand3+(Operand4*Operand5))';
-	var strJSon = '{"Operand1":78,"Operand2":89,"Operand3":99,"Operand4":55,"Operand5":2,"Min":"Math.min","Max":"Math.max"}';
+	var equation1 = '(Operand1*Operand2)+Operand3+(Operand4*Operand5)'; 
+	var equation2 = '(Operand1*Operand2)+Operand3+(Operand4*Operand5)*Operand3*Operand2*Operand1';
+	var equation3 = 'Min((((Operand1*Operand2)+Operand3+(Operand4*Operand5))*Operand3*Operand2*Operand1),(Operand1*Operand2)+Operand3+(Operand4*Operand5))';
+	var equation4 = 'Max((((Operand1*Operand2)+Operand3+(Operand4*Operand5))*Operand3*Operand2*Operand1),(Operand1*Operand2)+Operand3+(Operand4*Operand5))';
+	//var strJSon = '{"Operand1":78,"Operand2":89,"Operand3":99,"Operand4":55,"Operand5":2,"Min":"Math.min","Max":"Math.max"}';
+	//var strJSon = '{"Operand1":78,"Operand2":89,"Operand3":99,"Operand4":55,"Operand5":2,"Min":"Math.min","Max":"Math.max","preapprove":"10000","orpvehicle":"48000","model":"ECONOMY"}';
+	//var strJSon = '{"Operand1":78,"Operand2":89,"Operand3":99,"Operand4":55,"Operand5":2,"Min":"Math.min","Max":"Math.max","preapprove":"10000","orpvehicle":"45000","model":"ECONOMY", "productcategory":"2 Wheeler", "repaymentMode":"DCC","maketype":"KTM"}';
 	var equation7 = 'Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232))';
-	var numData6 = '(Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232)) > 0) && (Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232))<0)';
+	var equation5 = '(Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232)) > 0) && (Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232))<0)';
+	var equation6 = '(Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232)) > 0) && (Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232))<0)';
+	//var equation8 = 'Max(preapprove,Min(orpvehicle*.85,(model==="ECONOMY"?50000:if(model==="Executive":70000:if(model==="PREMIUM",85000,if(model==="Racing-1",110000,if(model==="Racing-2",110000)))))))';
+	//var equation8 = 'Max(preapprove,Min(orpvehicle*.85,(("model"=="ECONOMY")?50000:(("model"=="Executive")?70000:(("model"=="PREMIUM"),85000,(("model"=="Racing-1")?110000:(("model"=="Racing-2")?110000:0)))))))';
+	//var equation8 = 'Max(preapprove,Min(orpvehicle*.85,("model"=="ECONOMY")?50000:("model"=="Executive")?70000:("model"=="PREMIUM"),85000,("model"=="Racing-1")?110000:("model"=="Racing-2")?110000:0))';// )))))';
+	var equation8 = '(("productcategory" == "2 Wheller"  && "repaymentMode" == "DCC" && "maketype" == "KTM")?Max(preapprove,Min(orpvehicle*.85,(("model"=="ECONOMY")?50000:(("model"=="Executive")?70000:(("model"=="PREMIUM"),85000,(("model"=="Racing-1")?110000:(("model"=="Racing-2")?110000:0))))))): (Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232)) > 0) && (Min((1.2*10000)+(-1*1200)+(2*13)+(-1*12004),(0.17*3232))<0))';
+
 	//var calc = new Calculation();
 	//response.send(Calculation.evaluateExpressionData(strJSon,equation7));
 	//console.log(Calculation('',''));
@@ -52,8 +60,12 @@ app.get('/', function(request, response) {
 	let loop1 = request.query.loop1;
 	let loop2 = request.query.loop2;
 	let loop3 = request.query.loop3;
+	let strJSon = request.query.jsonStr;
 	
-	console.log('====equation'+equation);
+	// console.log('====equation'+equation8);
+	// console.log('====loop1'+loop1);
+	// console.log('====loop2'+loop2);
+	// console.log('====loop3'+loop3);
 
 	var Today = new Date();
 	var startTime = Today.getTime(); 
@@ -62,10 +74,13 @@ app.get('/', function(request, response) {
             m = today.getMinutes(),
             s = today.getSeconds();
 	console.log(h + ":" + m + ":" + s);
-	var result= Calculation.evaluateExpressionData(strJSon,equation,loop1,loop2,loop3);
+	var result= Calculation.evaluateExpressionData(strJSon,equation8,loop1,loop2,loop3);
 	console.log(startTime - Today.getTime());
 
-	response.status(200).send(String(result));
+	response.status(200).json({
+        message: String(result)
+    });
+	//response.status(200).send(String(result));
 	//status(200).send('some text');
 	console.log(startTime - Today.getTime());
 	
