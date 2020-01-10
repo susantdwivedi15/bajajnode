@@ -74,7 +74,7 @@ app.get('/', function(request, response) {
             m = today.getMinutes(),
             s = today.getSeconds();
 	console.log(h + ":" + m + ":" + s);
-	var result= Calculation.evaluateExpressionData(strJSon,equation8,loop1,loop2,loop3);
+	var result= Calculation.evaluateExpressionData(strJSon,equation,loop1,loop2,loop3);
 	console.log(startTime - Today.getTime());
 
 	response.status(200).json({
